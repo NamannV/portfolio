@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman V — Portfolio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
+
+  :root{
+    --bg: #12141a;
+    --bg-alt: #171a22;
+    --surface: #1b1e28;
+    --line: #2a2f3c;
+    --text: #eef0ee;
+    --text-dim: #9198a8;
+    --text-faint: #838aa0;
+    --accent: #6ee7c4;
+    --accent-2: #ffb454;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+
+    /* language / tech colors */
+    --c-js:#f1e05a; --c-ts:#5aa8ff; --c-py:#4ec9d9; --c-java:#e0975a;
+    --c-cs:#7fd67f; --c-html:#ff8a5c; --c-css:#c893ff; --c-sql:#ffd166;
+    --c-node:#7fe08a; --c-db:#6ec6ff; --c-react:#61dafb; --c-ml:#ff8fb1;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+    clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  .skip-link{
+    position:absolute;top:-100px;left:16px;z-index:100;
+    background:var(--accent);color:var(--bg);font-family:var(--mono);font-size:13px;
+    font-weight:700;padding:10px 16px;border-radius:6px;transition:top .15s ease;
+  }
+  .skip-link:focus{top:16px;}
+
+  a:focus-visible,
+  button:focus-visible,
+  .commit-link:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+  :focus:not(:focus-visible){outline:none;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--accent);color:var(--bg);}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:920px;margin:0 auto;padding:0 28px;}
+
+  nav{position:sticky;top:0;z-index:50;background:rgba(18,20,26,0.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;}
+  .nav-brand{font-family:var(--mono);font-size:14px;background:linear-gradient(90deg,var(--accent),var(--c-ts));-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:0.02em;}
+  .nav-links{display:flex;gap:24px;font-family:var(--mono);font-size:13px;color:var(--text-dim);}
+  .nav-links a{transition:color .15s ease;}
+  .nav-links a:nth-child(1):hover{color:var(--c-js);}
+  .nav-links a:nth-child(2):hover{color:var(--c-ts);}
+  .nav-links a:nth-child(3):hover{color:var(--c-py);}
+  .nav-links a:nth-child(4):hover{color:var(--accent-2);}
+  .nav-links a::before{content:'./';color:var(--text-faint);}
+
+  header{padding:72px 0 40px;}
+  .term{background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,0.6);}
+  .term-bar{display:flex;align-items:center;gap:8px;padding:11px 14px;background:var(--bg-alt);border-bottom:1px solid var(--line);}
+  .dot{width:11px;height:11px;border-radius:50%;}
+  .dot.r{background:#ff6b6b;} .dot.y{background:#ffd166;} .dot.g{background:#6ee7c4;}
+  .term-title{margin-left:8px;font-family:var(--mono);font-size:12px;color:var(--text-faint);}
+  .term-body{padding:26px 24px 30px;font-family:var(--mono);font-size:14.5px;}
+  .term-body .ln{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+  .prompt{color:var(--accent-2);flex-shrink:0;}
+  .cmd{color:#89ddff;}
+  .cmd .arg{color:#c3e88d;}
+  .out{color:var(--text-dim);padding-left:22px;display:block;margin-top:2px;}
+  .caret{display:inline-block;width:8px;height:16px;background:var(--accent);vertical-align:middle;animation:blink 1s step-end infinite;margin-left:2px;}
+  @keyframes blink{50%{opacity:0;}}
+  .hero-name{font-family:var(--sans);font-size:15px;color:var(--text);}
+  .hero-role{color:var(--accent);font-weight:600;}
+  .tag-row{display:flex;flex-wrap:wrap;gap:8px;padding-left:22px;margin-top:6px;}
+  .tag{font-family:var(--mono);font-size:11.5px;color:var(--text-dim);border:1px solid var(--line);border-radius:4px;padding:3px 8px 3px 6px;display:inline-flex;align-items:center;gap:6px;}
+  .tag .d{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+  section{padding:64px 0;border-top:1px solid var(--line);}
+  .eyebrow{font-family:var(--mono);font-size:12px;color:var(--text-faint);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+  .eyebrow::before{content:'#';color:var(--accent-2);}
+  h2{font-family:var(--sans);font-size:26px;font-weight:800;margin-bottom:6px;letter-spacing:-0.01em;}
+  .section-sub{color:var(--text-dim);font-size:15px;max-width:60ch;margin-bottom:36px;}
+
+  .about-body{color:var(--text-dim);font-size:15.5px;max-width:64ch;margin-bottom:28px;}
+  .about-body strong{color:var(--accent);font-weight:600;}
+
+  .edu-list{display:flex;flex-direction:column;gap:16px;}
+  .edu-card{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--c-ts);border-radius:8px;padding:18px 20px;}
+  .edu-card.pu{border-left-color:var(--c-ml);}
+  .edu-top{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:4px;}
+  .edu-school{font-weight:700;font-size:15.5px;}
+  .edu-date{font-family:var(--mono);font-size:12px;color:var(--text-faint);}
+  .edu-detail{color:var(--text-dim);font-size:14px;}
+  .edu-detail .grade{color:var(--accent);font-family:var(--mono);}
+
+  .log{border-left:2px solid var(--line);margin-left:6px;}
+  .commit{position:relative;padding:0 0 40px 30px;}
+  .commit:last-child{padding-bottom:4px;}
+  .commit::before{content:'';position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--node-color, var(--accent));box-shadow:0 0 0 4px rgba(110,231,196,0.06);}
+  .commit-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:6px;}
+  .hash{font-family:var(--mono);font-size:12.5px;color:var(--accent-2);}
+  .commit-title{font-family:var(--sans);font-size:18px;font-weight:700;}
+  .commit-meta{font-family:var(--mono);font-size:11.5px;color:var(--text-faint);margin-bottom:12px;}
+  .commit-desc{color:var(--text-dim);font-size:14.5px;max-width:62ch;margin-bottom:12px;}
+  .commit-desc li{margin-left:18px;margin-bottom:4px;}
+  .stack-row{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;}
+  .chip{font-family:var(--mono);font-size:11px;padding:4px 9px 4px 7px;border-radius:4px;background:var(--surface);border:1px solid var(--line);color:var(--text-dim);display:inline-flex;align-items:center;gap:6px;}
+  .chip .d{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+  .commit-link{font-family:var(--mono);font-size:12.5px;color:var(--accent);border:1px solid var(--line);border-radius:5px;padding:6px 12px;display:inline-flex;align-items:center;gap:6px;transition:border-color .15s ease, background .15s ease;}
+  .commit-link:hover{border-color:var(--accent);background:var(--surface);}
+  .commit-link::after{content:'→';transition:transform .15s ease;}
+  .commit-link:hover::after{transform:translateX(3px);}
+  .commit-link.disabled{color:var(--text-faint);cursor:default;}
+  .commit-link.disabled:hover{border-color:var(--line);background:none;}
+  .commit-link.disabled::after{content:'';}
+
+  .skills-term{background:var(--surface);border:1px solid var(--line);border-radius:8px;font-family:var(--mono);font-size:13.5px;overflow:hidden;}
+  .skills-term .term-body{padding:22px 22px 26px;}
+  .skill-group{margin-bottom:18px;}
+  .skill-group:last-child{margin-bottom:0;}
+  .skill-group .label{color:var(--text-faint);font-size:12px;margin-bottom:8px;}
+  .skill-list{display:flex;flex-wrap:wrap;gap:8px;}
+  .skill-pill{color:var(--text);background:var(--bg-alt);border:1px solid var(--line);border-radius:4px;padding:5px 10px 5px 8px;font-size:12.5px;display:inline-flex;align-items:center;gap:7px;}
+  .skill-pill .d{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+  .skill-pill.on{color:var(--bg);font-weight:600;border-color:transparent;}
+
+  .cert-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:32px;}
+  .cert-card{background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:14px 16px 14px 14px;border-left:3px solid var(--cert-color, var(--accent));}
+  .cert-card .name{font-weight:600;font-size:14px;}
+  .cert-card .issuer{font-family:var(--mono);font-size:11.5px;color:var(--text-faint);margin-top:3px;}
+  .extra-list{margin-top:14px;color:var(--text-dim);font-size:14.5px;}
+  .extra-list li{margin-left:18px;margin-bottom:6px;}
+  .extra-list li::marker{color:var(--accent-2);}
+
+  .contact-term{background:var(--surface);border:1px solid var(--line);border-radius:8px;font-family:var(--mono);font-size:14px;padding:26px 24px 30px;}
+  .contact-term .ln{margin-bottom:16px;}
+  .contact-links{display:flex;flex-direction:column;gap:12px;padding-left:22px;}
+  .contact-links a{display:flex;align-items:center;gap:10px;font-size:14.5px;transition:transform .15s ease, color .15s ease;color:var(--text);}
+  .contact-links a:hover{transform:translateX(3px);}
+  .contact-links a:nth-child(1):hover{color:var(--accent);}
+  .contact-links a:nth-child(2):hover{color:var(--c-ml);}
+  .contact-links a:nth-child(3):hover{color:var(--c-ts);}
+  .contact-links a:nth-child(4):hover{color:var(--accent-2);}
+  .contact-links .k{color:var(--text-faint);width:88px;flex-shrink:0;}
+
+  footer{padding:34px 0 60px;text-align:center;font-family:var(--mono);font-size:12px;color:var(--text-faint);}
+
+  @media(max-width:640px){
+    .nav-links{gap:14px;font-size:11.5px;}
+    .term-body{font-size:13px;}
+    h2{font-size:22px;}
+    .commit-title{font-size:16.5px;}
+    .cert-grid{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion: reduce){ .caret{animation:none;} html{scroll-behavior:auto;} }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<nav aria-label="Primary">
+  <div class="wrap">
+    <div class="nav-brand" aria-hidden="true">naman@portfolio ~ %</div>
+    <div class="nav-links">
+      <a href="#about">about</a>
+      <a href="#projects">projects</a>
+      <a href="#skills">skills</a>
+      <a href="#contact">contact</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+<header>
+  <div class="wrap">
+    <h1 class="sr-only">Naman V — Computer Science student and full-stack developer, portfolio</h1>
+    <div class="term">
+      <div class="term-bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="term-title">naman — zsh — 92×24</span>
+      </div>
+      <div class="term-body">
+        <div class="ln"><span class="prompt">$</span><span class="cmd">whoami</span></div>
+        <span class="out hero-name">Naman V — <span class="hero-role">CS Student &amp; Full-Stack Developer</span></span>
+
+        <div class="ln" style="margin-top:18px;"><span class="prompt">$</span><span class="cmd">cat <span class="arg">objective.txt</span></span></div>
+        <span class="out">B.Tech CS student building full-stack, API-driven apps in Java, JavaScript &amp; Python. Looking for a Software Engineering internship to ship production code and learn from experienced engineers.<span class="caret"></span></span>
+
+        <div class="ln" style="margin-top:18px;"><span class="prompt">$</span><span class="cmd">ls -la <span class="arg">stack/</span></span></div>
+        <div class="tag-row">
+          <span class="tag"><span class="d" style="background:var(--c-java)"></span>Java</span>
+          <span class="tag"><span class="d" style="background:var(--c-js)"></span>JavaScript</span>
+          <span class="tag"><span class="d" style="background:var(--c-py)"></span>Python</span>
+          <span class="tag"><span class="d" style="background:var(--c-react)"></span>React</span>
+          <span class="tag"><span class="d" style="background:var(--c-node)"></span>Node.js</span>
+          <span class="tag"><span class="d" style="background:var(--c-cs)"></span>ASP.NET Core</span>
+          <span class="tag"><span class="d" style="background:var(--c-sql)"></span>SQL</span>
+          <span class="tag"><span class="d" style="background:var(--accent-2)"></span>Git</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="eyebrow">about</div>
+    <h2>A little context</h2>
+    <p class="about-body">
+      I'm <strong>Naman</strong>, a Computer Science Engineering student with a strong foundation in data structures,
+      algorithms, and object-oriented programming, plus hands-on experience building full-stack, API-driven
+      applications across Java, JavaScript, and Python. I'm looking for a Software Engineering internship where
+      I can ship production-quality code and grow through code review and design discussions.
+    </p>
+
+    <div class="edu-list">
+      <div class="edu-card">
+        <div class="edu-top">
+          <span class="edu-school">NMAM Institute of Technology</span>
+          <span class="edu-date">June 2023 – May 2027</span>
+        </div>
+        <div class="edu-detail">B.Tech, Computer Science Engineering (Full Stack Development) — <span class="grade">CGPA 7.27</span></div>
+      </div>
+      <div class="edu-card pu">
+        <div class="edu-top">
+          <span class="edu-school">Boscoss PU College</span>
+          <span class="edu-date">April 2021 – April 2023</span>
+        </div>
+        <div class="edu-detail">12th, PCMS — <span class="grade">84%</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="eyebrow">projects</div>
+    <h2>git log --oneline --graph</h2>
+    <p class="section-sub">Six builds spanning full-stack apps, REST APIs, and a data pipeline. Newest first.</p>
+
+    <div class="log">
+
+      <div class="commit" style="--node-color:var(--c-ts);">
+        <div class="commit-head"><span class="hash">a3f9c2e</span><span class="commit-title">StayEaze — Coast Connect</span></div>
+        <div class="commit-meta">feat(booking): full-stack coastal stay-booking platform</div>
+        <p class="commit-desc">A property-booking web app with React, TypeScript and Vite on the front end, Supabase handling auth, data and storage on the back end. Styled with Tailwind and shadcn/ui.</p>
+        <div class="stack-row">
+          <span class="chip"><span class="d" style="background:var(--c-react)"></span>React</span>
+          <span class="chip"><span class="d" style="background:var(--c-ts)"></span>TypeScript</span>
+          <span class="chip"><span class="d" style="background:var(--c-db)"></span>Supabase</span>
+          <span class="chip"><span class="d" style="background:var(--c-css)"></span>Tailwind CSS</span>
+        </div>
+        <a class="commit-link" href="https://github.com/NamannV/stayeaze-coast-connect-14105" target="_blank" rel="noopener" aria-label="View StayEaze Coast Connect repository on GitHub (opens in new tab)">view repo</a>
+      </div>
+
+      <div class="commit" style="--node-color:var(--c-html);">
+        <div class="commit-head"><span class="hash">7d1b48a</span><span class="commit-title">ByDesign Architects</span></div>
+        <div class="commit-meta">feat(site): client-facing website for an architecture studio</div>
+        <p class="commit-desc">A marketing site for an architecture firm, built in React to showcase projects, services and client engagement.</p>
+        <div class="stack-row">
+          <span class="chip"><span class="d" style="background:var(--c-react)"></span>React</span>
+          <span class="chip"><span class="d" style="background:var(--c-html)"></span>HTML</span>
+          <span class="chip"><span class="d" style="background:var(--c-css)"></span>CSS</span>
+        </div>
+        <a class="commit-link" href="https://github.com/NamannV/bydesign-architects" target="_blank" rel="noopener" aria-label="View ByDesign Architects repository on GitHub (opens in new tab)">view repo</a>
+      </div>
+
+      <div class="commit" style="--node-color:var(--c-node);">
+        <div class="commit-head"><span class="hash">e29a071</span><span class="commit-title">Tech Solutions Web Application</span></div>
+        <div class="commit-meta">feat(app): full-stack IT service management platform</div>
+        <ul class="commit-desc">
+          <li>Designed and implemented REST APIs connecting a React frontend to an Express/Node.js backend, used end-to-end by test users.</li>
+          <li>Modeled and integrated a PostgreSQL schema for persistent storage, structuring API contracts between frontend and backend.</li>
+        </ul>
+        <div class="stack-row">
+          <span class="chip"><span class="d" style="background:var(--c-react)"></span>React</span>
+          <span class="chip"><span class="d" style="background:var(--c-node)"></span>Node.js</span>
+          <span class="chip"><span class="d" style="background:var(--c-node)"></span>Express.js</span>
+          <span class="chip"><span class="d" style="background:var(--c-db)"></span>PostgreSQL</span>
+        </div>
+        <a class="commit-link" href="https://github.com/NamannV/tech-solutions" target="_blank" rel="noopener" aria-label="View Tech Solutions Web Application repository on GitHub (opens in new tab)">view repo</a>
+      </div>
+
+      <div class="commit" style="--node-color:var(--c-cs);">
+        <div class="commit-head"><span class="hash">4c8f0d3</span><span class="commit-title">Food Ordering System</span></div>
+        <div class="commit-meta">feat(api): full-stack ordering app with REST endpoints</div>
+        <ul class="commit-desc">
+          <li>Built end-to-end: user authentication, menu management, cart, and order placement, exposed through REST endpoints.</li>
+          <li>Designed the relational schema and data access layer with Entity Framework Core.</li>
+        </ul>
+        <div class="stack-row">
+          <span class="chip"><span class="d" style="background:var(--c-cs)"></span>ASP.NET Core</span>
+          <span class="chip"><span class="d" style="background:var(--c-cs)"></span>Entity Framework Core</span>
+          <span class="chip"><span class="d" style="background:var(--c-db)"></span>SQL Server</span>
+          <span class="chip"><span class="d" style="background:var(--c-css)"></span>Bootstrap</span>
+        </div>
+        <a class="commit-link" href="https://github.com/NamannV/foodorderAPI" target="_blank" rel="noopener" aria-label="View Food Ordering System repository on GitHub (opens in new tab)">view repo</a>
+      </div>
+
+      <div class="commit" style="--node-color:var(--c-react);">
+        <div class="commit-head"><span class="hash">918bc55</span><span class="commit-title">Fitness Tracker App</span></div>
+        <div class="commit-meta">feat(app): workout &amp; health-activity tracker</div>
+        <p class="commit-desc">A workout and health-activity tracking app with a React frontend backed by a Node.js/MongoDB API layer, handling data modeling and CRUD endpoint design.</p>
+        <div class="stack-row">
+          <span class="chip"><span class="d" style="background:var(--c-react)"></span>React</span>
+          <span class="chip"><span class="d" style="background:var(--c-node)"></span>Node.js</span>
+          <span class="chip"><span class="d" style="background:var(--c-db)"></span>MongoDB</span>
+        </div>
+        <span class="commit-link disabled" aria-label="Repository not yet linked from Fitness Tracker App; browse it from the GitHub profile below">on GitHub profile</span>
+      </div>
+
+      <div class="commit" style="--node-color:var(--c-ml);">
+        <div class="commit-head"><span class="hash">0a1e6f2</span><span class="commit-title">Electricity Consumption Prediction System</span></div>
+        <div class="commit-meta">feat(ml): forecasting pipeline for electricity consumption</div>
+        <ul class="commit-desc">
+          <li>Built a data pipeline in Python covering data cleaning, feature engineering, and model evaluation.</li>
+          <li>Applied core CS fundamentals — data handling, evaluation metrics, iterative debugging — to turn raw data into a testable forecasting model.</li>
+        </ul>
+        <div class="stack-row">
+          <span class="chip"><span class="d" style="background:var(--c-py)"></span>Python</span>
+          <span class="chip"><span class="d" style="background:var(--c-ml)"></span>Pandas</span>
+          <span class="chip"><span class="d" style="background:var(--c-ml)"></span>Matplotlib</span>
+          <span class="chip"><span class="d" style="background:var(--c-ml)"></span>Scikit-learn</span>
+        </div>
+        <span class="commit-link disabled" aria-label="Repository not yet linked from Electricity Consumption Prediction System; browse it from the GitHub profile below">on GitHub profile</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="eyebrow">skills</div>
+    <h2>Stack breakdown</h2>
+    <p class="section-sub">Languages, web &amp; data tools, and practices — plus certifications along the way.</p>
+
+    <div class="skills-term">
+      <div class="term-bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="term-title">stack.json</span>
+      </div>
+      <div class="term-body">
+        <div class="skill-group">
+          <div class="label">// languages</div>
+          <div class="skill-list">
+            <span class="skill-pill on" style="background:var(--c-java);"><span class="d" style="background:rgba(0,0,0,.25)"></span>Java</span>
+            <span class="skill-pill on" style="background:var(--c-js);"><span class="d" style="background:rgba(0,0,0,.25)"></span>JavaScript</span>
+            <span class="skill-pill on" style="background:var(--c-py);color:#0c1116;"><span class="d" style="background:rgba(0,0,0,.25)"></span>Python</span>
+            <span class="skill-pill"><span class="d" style="background:var(--c-cs)"></span>C</span>
+            <span class="skill-pill"><span class="d" style="background:var(--c-ml)"></span>R</span>
+            <span class="skill-pill"><span class="d" style="background:var(--c-sql)"></span>SQL</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="label">// web &amp; data</div>
+          <div class="skill-list">
+            <span class="skill-pill on" style="background:var(--c-react);color:#0c1116;"><span class="d" style="background:rgba(0,0,0,.25)"></span>REST API design</span>
+            <span class="skill-pill on" style="background:var(--c-react);color:#0c1116;"><span class="d" style="background:rgba(0,0,0,.25)"></span>React JS</span>
+            <span class="skill-pill on" style="background:var(--c-node);color:#0c1116;"><span class="d" style="background:rgba(0,0,0,.25)"></span>Node.js / Express.js</span>
+            <span class="skill-pill"><span class="d" style="background:var(--c-html)"></span>HTML</span>
+            <span class="skill-pill"><span class="d" style="background:var(--c-css)"></span>CSS</span>
+            <span class="skill-pill"><span class="d" style="background:var(--c-db)"></span>PostgreSQL</span>
+            <span class="skill-pill"><span class="d" style="background:var(--c-db)"></span>SQL Server</span>
+            <span class="skill-pill"><span class="d" style="background:var(--c-db)"></span>MongoDB</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="label">// practices</div>
+          <div class="skill-list">
+            <span class="skill-pill"><span class="d" style="background:var(--accent)"></span>Full-stack development</span>
+            <span class="skill-pill"><span class="d" style="background:var(--accent-2)"></span>Relational &amp; document data modeling</span>
+            <span class="skill-pill"><span class="d" style="background:var(--c-ts)"></span>Version control</span>
+            <span class="skill-pill"><span class="d" style="background:var(--c-ml)"></span>Debugging &amp; testing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cert-grid">
+      <div class="cert-card" style="--cert-color:var(--c-ml);"><div class="name">Data Science &amp; Analytics</div><div class="issuer">HP · Feb 2024</div></div>
+      <div class="cert-card" style="--cert-color:var(--c-cs);"><div class="name">Software Engineering</div><div class="issuer">Infosys · Apr 2024</div></div>
+      <div class="cert-card" style="--cert-color:var(--accent-2);"><div class="name">Ethical Hacking</div><div class="issuer">Udemy · Apr 2024</div></div>
+      <div class="cert-card" style="--cert-color:var(--c-ts);"><div class="name">Python Crash Course</div><div class="issuer">Google</div></div>
+    </div>
+
+    <ul class="extra-list">
+      <li><strong style="color:var(--text);">ACE Club</strong> — contributed to technical and creative events within the branch.</li>
+      <li><strong style="color:var(--text);">Robotics Club (RCN)</strong> — participated in workshops and club activities.</li>
+      <li><strong style="color:var(--text);">Languages</strong> — English, Hindi &amp; Kannada.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="eyebrow">contact</div>
+    <h2>Get in touch</h2>
+    <div class="contact-term">
+      <div class="ln"><span class="prompt">$</span><span class="cmd">contact <span class="arg">--list</span></span></div>
+      <div class="contact-links">
+        <a href="mailto:naman.v03m@gmail.com"><span class="k">email</span> naman.v03m@gmail.com</a>
+        <a href="tel:+917975926073"><span class="k">phone</span> +91 79759 26073</a>
+        <a href="https://linkedin.com/in/naman-v-link" target="_blank" rel="noopener" aria-label="LinkedIn profile, opens in new tab"><span class="k">linkedin</span> linkedin.com/in/naman-v-link</a>
+        <a href="https://github.com/NamannV" target="_blank" rel="noopener" aria-label="GitHub profile, opens in new tab"><span class="k">github</span> github.com/NamannV</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  built with git log energy · last updated 2026
+</footer>
+
+</body>
+</html>
